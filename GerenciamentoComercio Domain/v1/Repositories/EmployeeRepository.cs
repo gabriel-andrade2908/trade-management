@@ -12,7 +12,6 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
     {
         public EmployeeRepository(GerenciamentoComercioContext context) : base(context)
         {
-
         }
 
         public Employee CheckLogin(LoginRequest request)
@@ -22,9 +21,9 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
                 x.Access == request.Access).FirstOrDefault();
         }
 
-        public bool CheckIfExistUserWithSameEmail(string email)
+        public Employee GetUserByEmail(string email)
         {
-            return _context.Employees.Any(x => x.Email == email);
+            return _context.Employees.FirstOrDefault(x => x.Email == email);
         }
     }
 }

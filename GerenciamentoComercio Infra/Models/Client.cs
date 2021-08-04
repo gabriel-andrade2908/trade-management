@@ -18,6 +18,8 @@ namespace GerenciamentoComercio_Infra.Models
         public string Cpf { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+        public DateTime? CreationDate { get; set; }
+        public string CreationUser { get; set; }
 
         public virtual ICollection<ClientTransaction> ClientTransactions { get; set; }
     }

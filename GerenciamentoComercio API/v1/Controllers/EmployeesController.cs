@@ -28,16 +28,16 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [HttpGet]
         [SwaggerOperation("Returns all employees")]
         [SwaggerResponse(StatusCodes.Status200OK, "", typeof(List<GetEmployeesResponse>))]
-        public async Task<IActionResult> GetAllEmployessAsync()
+        public async Task<IActionResult> GetAllEmployeesAsync()
         {
-            APIMessage response = await _employeesServices.GetAllEmployessAsync();
+            APIMessage response = await _employeesServices.GetAllEmployeesAsync();
 
             return StatusCode((int)response.StatusCode, response.ContentObj);
         }
 
         [HttpGet("{id}")]
         [SwaggerOperation("Returns an employee by id")]
-        [SwaggerResponse(StatusCodes.Status200OK, "", typeof(List<GetEmployeesResponse>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "", typeof(GetEmployeeByIdResponse))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "User not found", typeof(string))]
         public async Task<IActionResult> GetEmployeeById(int id)
         {

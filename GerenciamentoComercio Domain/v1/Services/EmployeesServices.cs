@@ -26,7 +26,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<APIMessage> GetAllEmployessAsync()
+        public async Task<APIMessage> GetAllEmployeesAsync()
         {
             IEnumerable<Employee> employees = await _employeeRepository.GetMany();
 
@@ -52,12 +52,11 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     new List<string> { "Usuário não encontrado." });
             }
 
-            return new APIMessage(HttpStatusCode.OK, new GetEmployeesResponse
+            return new APIMessage(HttpStatusCode.OK, new GetEmployeeByIdResponse
             {
                 Address = employee.Address,
                 Email = employee.Email,
                 FullName = employee.FullName,
-                Id = employee.Id,
                 IsAdministrator = employee.IsAdministrator,
                 Phone = employee.Phone
             });
@@ -149,9 +148,9 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     .BadRequest, new List<string> { "Favor inserir uma senha ou gerar uma senha automática." });
             }
 
-            bool checkUserEmail = _employeeRepository.CheckIfExistUserWithSameEmail(request.Email);
+            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
 
-            if (checkUserEmail)
+            if (checkIfExistUserEmail != null)
             {
                 return new APIMessage(HttpStatusCode
                     .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });

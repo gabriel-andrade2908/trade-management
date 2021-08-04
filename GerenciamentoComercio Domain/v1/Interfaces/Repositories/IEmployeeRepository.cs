@@ -7,6 +7,6 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
     public interface IEmployeeRepository : IRepository<Employee>
     {
         Employee CheckLogin(LoginRequest request);
-        bool CheckIfExistUserWithSameEmail(string email);
+        Employee GetUserByEmail(string email);
     }
 }

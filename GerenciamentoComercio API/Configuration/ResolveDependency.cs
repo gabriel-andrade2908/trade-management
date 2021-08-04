@@ -1,4 +1,5 @@
 ﻿using GerenciamentoComercio_API.Configuration;
+using GerenciamentoComercio_Domain.Utils.EmailSender;
 using GerenciamentoComercio_Domain.Utils.IUserApp;
 using GerenciamentoComercio_Domain.Utils.UnitOfWork;
 using GerenciamentoComercio_Domain.v1.Interfaces.Repositories;
@@ -25,11 +26,15 @@ namespace Sistema_Incidentes.Configuration
 
             //Repositories
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
 
 
             // Services
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailServices, EmailServices>();
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<IEmployeesServices, EmployeesServices>();
+            services.AddScoped<IClientsServices, ClientsServices>();
 
             return services;
         }

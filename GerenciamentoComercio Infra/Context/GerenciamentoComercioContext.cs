@@ -34,6 +34,11 @@ namespace GerenciamentoComercio_Infra.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=74.50.111.162;Database=GerenciamentoComercio;User ID=lealdrade;Password=Abc#1234");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -52,17 +57,17 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("DESCRIPTION");
 
                 entity.Property(e => e.Type)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("TYPE");
             });
@@ -74,27 +79,36 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("ADDRESS");
 
                 entity.Property(e => e.Cpf)
-                    .HasMaxLength(1)
+                    .HasMaxLength(14)
                     .IsUnicode(false)
                     .HasColumnName("CPF");
 
+                entity.Property(e => e.CreationDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("CREATION_DATE");
+
+                entity.Property(e => e.CreationUser)
+                    .HasMaxLength(150)
+                    .IsUnicode(false)
+                    .HasColumnName("CREATION_USER");
+
                 entity.Property(e => e.Email)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("EMAIL");
 
                 entity.Property(e => e.FullName)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("FULL_NAME");
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(1)
+                    .HasMaxLength(15)
                     .IsUnicode(false)
                     .HasColumnName("PHONE");
             });
@@ -110,7 +124,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
@@ -125,7 +139,7 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.IdEmployee).HasColumnName("ID_EMPLOYEE");
 
                 entity.Property(e => e.Observations)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("OBSERVATIONS");
 
@@ -155,7 +169,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
@@ -191,7 +205,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
@@ -223,12 +237,12 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.Access)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("ACCESS");
 
                 entity.Property(e => e.Address)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("ADDRESS");
 
@@ -237,29 +251,29 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Email)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("EMAIL");
 
                 entity.Property(e => e.FullName)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("FULL_NAME");
 
                 entity.Property(e => e.IsAdministrator).HasColumnName("IS_ADMINISTRATOR");
 
                 entity.Property(e => e.Password)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("PASSWORD");
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("PHONE");
             });
@@ -275,7 +289,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
@@ -307,12 +321,12 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("DESCRIPTION");
 
@@ -321,7 +335,7 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("NAME");
 
@@ -342,19 +356,19 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("DESCRIPTION");
 
                 entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("TITLE");
             });
@@ -370,7 +384,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
@@ -401,12 +415,12 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("DESCRIPTION");
 
@@ -415,7 +429,7 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("NAME");
 
@@ -440,19 +454,19 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
                 entity.Property(e => e.Description)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("DESCRIPTION");
 
                 entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
 
                 entity.Property(e => e.Title)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("TITLE");
             });
@@ -468,7 +482,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("CREATION_DATE");
 
                 entity.Property(e => e.CreationUser)
-                    .HasMaxLength(1)
+                    .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("CREATION_USER");
 
