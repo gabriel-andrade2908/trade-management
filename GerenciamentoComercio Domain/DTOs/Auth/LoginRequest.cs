@@ -7,7 +7,7 @@ namespace GerenciamentoComercio_Domain.DTOs.Auth
         [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Access { get; set; }
 
-        [Required(ErrorMessage = "O campo senha é obrigatório.")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório.")]
         public string Password { get; set; }
     }
 }
