@@ -21,5 +21,10 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
                 .Where(x => x.Password == Security.EncryptString(request.Password) && 
                 x.Access == request.Access).FirstOrDefault();
         }
+
+        public bool CheckIfExistUserWithSameEmail(string email)
+        {
+            return _context.Employees.Any(x => x.Email == email);
+        }
     }
 }
