@@ -55,7 +55,7 @@ namespace GerenciamentoComercio_Domain.Utils.IUserApp
 
         public string GetUserName()
         => _httpContextAccessor.HttpContext.User.Claims
-                .Where(x => x.Type == "UserName")
+                .Where(x => x.Type == "UserFullName")
                 .Select(x => x.Value)
                 .FirstOrDefault();
 

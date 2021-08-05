@@ -64,7 +64,7 @@ public class ClientsController : MainController
     [SwaggerOperation("Updates a client")]
     [SwaggerResponse(StatusCodes.Status200OK, "Client updated successfully", typeof(string))]
     [SwaggerResponse(StatusCodes.Status404NotFound, "Client not found", typeof(string))]
-    public async Task<IActionResult> UpdateClientAsync(AddNewClientRequest request, int id)
+    public async Task<IActionResult> UpdateClientAsync(UpdateClientRequest request, int id)
     {
         APIMessage response = await _clientsServices.UpdateClientAsync(request, id);
 

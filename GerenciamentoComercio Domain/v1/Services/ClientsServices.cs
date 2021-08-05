@@ -62,6 +62,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public APIMessage AddNewClient(AddNewClientRequest request, string userName)
         {
+            Client checkIfExistClientEmail = _clientRepository.GetClientByEmail(request.Email);
+
+            if (checkIfExistClientEmail != null)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Já existe um cliente cadastrado com este e-mail." });
+            }
+
             var newClient= new Client
             {
                 Address = request.Address,
@@ -80,7 +88,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Cliente cadastrado com sucesso." });
         }
 
-        public async Task<APIMessage> UpdateClientAsync(AddNewClientRequest request, int id)
+        public async Task<APIMessage> UpdateClientAsync(UpdateClientRequest request, int id)
         {
             Client client = await _clientRepository.GetById(id);
 
@@ -88,6 +96,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
             {
                 return new APIMessage(HttpStatusCode.NotFound,
                     new List<string> { "Cliente não encontrado." });
+            }
+
+            Client checkIfExistClientEmail = _clientRepository.GetClientByEmail(request.Email);
+
+            if (checkIfExistClientEmail != null && checkIfExistClientEmail.Id != id)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Já existe um cliente cadastrado com este e-mail." });
             }
 
             client.Address = request.Address ?? client.Address;

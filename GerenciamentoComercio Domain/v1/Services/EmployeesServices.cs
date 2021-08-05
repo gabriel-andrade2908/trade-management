@@ -102,6 +102,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     new List<string> { "Usuário não encontrado." });
             }
 
+            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
+
+            if (checkIfExistUserEmail != null)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });
+            }
+
             employee.Access = request.Access ?? employee.Access;
             employee.Address = request.Address ?? employee.Address;
             employee.Email = request.Email ?? employee.Email;

@@ -108,7 +108,8 @@ namespace Incidentes.Business.v1.Services
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
             claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
-            claims.Add(new Claim("UserName", user.FullName));
+            claims.Add(new Claim("UserFullName", user.FullName));
+            claims.Add(new Claim("UserShortName", user.FullName.Split(" ")[0]));
             claims.Add(new Claim("UserCode", user.Id.ToString()));
 
             ClaimsIdentity identityClaims = new ClaimsIdentity();
