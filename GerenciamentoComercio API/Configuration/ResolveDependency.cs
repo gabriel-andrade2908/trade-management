@@ -1,6 +1,7 @@
 ﻿using GerenciamentoComercio_API.Configuration;
 using GerenciamentoComercio_Domain.Utils.EmailSender;
 using GerenciamentoComercio_Domain.Utils.IUserApp;
+using GerenciamentoComercio_Domain.Utils.ModelStateValidation;
 using GerenciamentoComercio_Domain.Utils.UnitOfWork;
 using GerenciamentoComercio_Domain.v1.Interfaces.Repositories;
 using GerenciamentoComercio_Domain.v1.Interfaces.Services;
@@ -20,6 +21,7 @@ namespace Sistema_Incidentes.Configuration
         {
             //Work Interfaces
             services.AddScoped<IUserApp, UserApp>();
+            services.AddScoped<INotifier, Notifier>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();

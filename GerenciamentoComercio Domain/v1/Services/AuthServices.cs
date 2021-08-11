@@ -111,6 +111,7 @@ namespace Incidentes.Business.v1.Services
             claims.Add(new Claim("UserFullName", user.FullName));
             claims.Add(new Claim("UserShortName", user.FullName.Split(" ")[0]));
             claims.Add(new Claim("UserCode", user.Id.ToString()));
+            claims.Add(new Claim("IsAdministrator", user.IsAdministrator.ToString()));
 
             ClaimsIdentity identityClaims = new ClaimsIdentity();
 

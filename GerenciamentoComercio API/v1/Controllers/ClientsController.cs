@@ -2,6 +2,7 @@
 using GerenciamentoComercio_Domain.DTOs.Clients;
 using GerenciamentoComercio_Domain.Utils.APIMessage;
 using GerenciamentoComercio_Domain.Utils.IUserApp;
+using GerenciamentoComercio_Domain.Utils.ModelStateValidation;
 using GerenciamentoComercio_Domain.v1.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,7 +20,7 @@ public class ClientsController : MainController
     private readonly IClientsServices _clientsServices;
 
     public ClientsController(IClientsServices clientsServices,
-        IUserApp userApp) : base(userApp)
+        IUserApp userApp, INotifier notifier) : base(userApp, notifier)
     {
         _clientsServices = clientsServices;
     }
@@ -55,6 +56,8 @@ public class ClientsController : MainController
     [SwaggerResponse(StatusCodes.Status200OK, "Client created successfully", typeof(string))]
     public IActionResult AddNewCient(AddNewClientRequest request)
     {
+        if (!ModelState.IsValid) return CustomReturn(ModelState);
+
         APIMessage response = _clientsServices.AddNewClient(request, UserName);
 
         return StatusCode((int)response.StatusCode, response.Content);
@@ -66,6 +69,8 @@ public class ClientsController : MainController
     [SwaggerResponse(StatusCodes.Status404NotFound, "Client not found", typeof(string))]
     public async Task<IActionResult> UpdateClientAsync(UpdateClientRequest request, int id)
     {
+        if (!ModelState.IsValid) return CustomReturn(ModelState);
+
         APIMessage response = await _clientsServices.UpdateClientAsync(request, id);
 
         return StatusCode((int)response.StatusCode, response.Content);

@@ -38,7 +38,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     FullName = x.FullName,
                     Id = x.Id,
                     IsAdministrator = x.IsAdministrator,
-                    Phone = x.Phone
+                    Phone = x.Phone,
+                    Access = x.Access
                 }));
         }
 
@@ -58,7 +59,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Email = employee.Email,
                 FullName = employee.FullName,
                 IsAdministrator = employee.IsAdministrator,
-                Phone = employee.Phone
+                Phone = employee.Phone,
+                Access = employee.Access
             });
         }
 
@@ -92,23 +94,16 @@ namespace GerenciamentoComercio_Domain.v1.Services
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Usuário cadastrado com sucesso." });
         }
 
-        public async Task<APIMessage> UpdateEmployeeAsync(UpdateEmployeeRequest request, int id)
+        public APIMessage UpdateEmployee(UpdateEmployeeRequest request, int id, int userCode)
         {
-            Employee employee = await _employeeRepository.GetById(id);
+            var validation = ValidadeUpdateEmployee(request, id, userCode);
 
-            if (employee == null)
+            if (validation.StatusCode != HttpStatusCode.OK)
             {
-                return new APIMessage(HttpStatusCode.NotFound,
-                    new List<string> { "Usuário não encontrado." });
+                return new APIMessage(validation.StatusCode, validation.Content);
             }
 
-            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
-
-            if (checkIfExistUserEmail != null)
-            {
-                return new APIMessage(HttpStatusCode
-                    .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });
-            }
+            Employee employee = (Employee)validation.ContentObj;
 
             employee.Access = request.Access ?? employee.Access;
             employee.Address = request.Address ?? employee.Address;
@@ -116,6 +111,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             employee.FullName = request.FullName ?? employee.FullName;
             employee.IsAdministrator = request.IsAdministrator ?? employee.IsAdministrator;
             employee.Phone = request.Phone ?? employee.Phone;
+            employee.Password = Security.EncryptString(request.Password) ?? employee.Password;
 
             _employeeRepository.Update(employee);
 
@@ -165,6 +161,35 @@ namespace GerenciamentoComercio_Domain.v1.Services
             }
 
             return new APIMessage(HttpStatusCode.OK, "");
+        }
+
+        private APIMessage ValidadeUpdateEmployee(UpdateEmployeeRequest request, int id, int userCode)
+        {
+            Task<Employee> employee = _employeeRepository.GetById(id);
+
+            Task<Employee> loggedUser = _employeeRepository.GetById(userCode);
+
+            if (employee == null)
+            {
+                return new APIMessage(HttpStatusCode.NotFound,
+                    new List<string> { "Usuário não encontrado." });
+            }
+
+            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
+
+            if (checkIfExistUserEmail != null)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });
+            }
+
+            if (!string.IsNullOrEmpty(request.Password) && !loggedUser.Result.IsAdministrator.Value)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Usuario não tem permissão para alteração de senha." });
+            }
+
+            return new APIMessage(HttpStatusCode.OK, employee);
         }
     }
 }

@@ -59,6 +59,12 @@ namespace GerenciamentoComercio_Domain.Utils.IUserApp
                 .Select(x => x.Value)
                 .FirstOrDefault();
 
+        public string GetIfUserIsAdmin()
+        => _httpContextAccessor.HttpContext.User.Claims
+        .Where(x => x.Type == "IsAdministrator")
+        .Select(x => x.Value)
+        .FirstOrDefault();
+
         public bool UserHasClaim(string type, string value)
             => _httpContextAccessor.HttpContext.User.Claims
                 .Where(x => x.Type == type)

@@ -1,6 +1,7 @@
 ﻿using GerenciamentoComercio_Domain.DTOs.Employees;
 using GerenciamentoComercio_Domain.Utils.APIMessage;
 using GerenciamentoComercio_Domain.Utils.IUserApp;
+using GerenciamentoComercio_Domain.Utils.ModelStateValidation;
 using GerenciamentoComercio_Domain.v1.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,7 +21,7 @@ namespace GerenciamentoComercio_API.v1.Controllers
         private readonly IEmployeesServices _employeesServices;
 
         public EmployeesController(IEmployeesServices employeesServices,
-            IUserApp userApp) : base(userApp)
+            IUserApp userApp, INotifier notifier) : base(userApp, notifier)
         {
             _employeesServices = employeesServices;
         }
@@ -56,6 +57,8 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [SwaggerResponse(StatusCodes.Status200OK, "User created successfully", typeof(string))]
         public IActionResult AddNewEmployee(AddNewEmployeeRequest request)
         {
+            if (!ModelState.IsValid) return CustomReturn(ModelState);
+
             APIMessage response =  _employeesServices.AddNewEmployee(request, UserName);
 
             return StatusCode((int)response.StatusCode, response.Content);
@@ -65,9 +68,11 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [SwaggerOperation("Updates an employee")]
         [SwaggerResponse(StatusCodes.Status200OK, "User updated successfully", typeof(string))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "User not found", typeof(string))]
-        public async Task<IActionResult> UpdateEmployeeAsync(UpdateEmployeeRequest request, int id)
+        public IActionResult UpdateEmployeeAsync(UpdateEmployeeRequest request, int id)
         {
-            APIMessage response = await _employeesServices.UpdateEmployeeAsync(request, id);
+            if (!ModelState.IsValid) return CustomReturn(ModelState);
+
+            APIMessage response =  _employeesServices.UpdateEmployee(request, id, UserCode);
 
             return StatusCode((int)response.StatusCode, response.Content);
         }

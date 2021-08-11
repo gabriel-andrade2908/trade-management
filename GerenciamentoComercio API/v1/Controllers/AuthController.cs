@@ -2,6 +2,7 @@
 using GerenciamentoComercio_Domain.DTOs.Auth;
 using GerenciamentoComercio_Domain.Utils.APIMessage;
 using GerenciamentoComercio_Domain.Utils.IUserApp;
+using GerenciamentoComercio_Domain.Utils.ModelStateValidation;
 using GerenciamentoComercio_Domain.v1.Interfaces.Services;
 using GerenciamentoComercio_Infra.Models;
 using Incidentes.Business.DTOs.Response;
@@ -23,8 +24,8 @@ namespace Sistema_Incidentes.v1.Controllers
         private readonly IEmailServices _emailServices;
 
         public AuthController(IAuthServices authServices,
-            IUserApp userApp,
-            IEmailServices emailServices) : base(userApp)
+            IUserApp userApp, INotifier notifier,
+            IEmailServices emailServices) : base(userApp, notifier)
         {
             _authServices = authServices;
             _emailServices = emailServices;
@@ -36,6 +37,8 @@ namespace Sistema_Incidentes.v1.Controllers
         [SwaggerResponse(StatusCodes.Status404NotFound, "User not found", typeof(string))]
         public IActionResult Login(LoginRequest request)
         {
+            if (!ModelState.IsValid) return CustomReturn(ModelState);
+
             APIMessage response = _authServices.Login(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
