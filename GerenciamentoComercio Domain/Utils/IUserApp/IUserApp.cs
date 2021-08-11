@@ -13,5 +13,6 @@ namespace GerenciamentoComercio_Domain.Utils.IUserApp
         bool IsInRole(string role);
         IEnumerable<Claim> GetClaimsIdentity();
         bool UserHasClaim(string type, string value);
+        string GetIfUserIsAdmin();
     }
 }

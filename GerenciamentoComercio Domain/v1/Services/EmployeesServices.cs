@@ -26,7 +26,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<APIMessage> GetAllEmployessAsync()
+        public async Task<APIMessage> GetAllEmployeesAsync()
         {
             IEnumerable<Employee> employees = await _employeeRepository.GetMany();
 
@@ -38,7 +38,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     FullName = x.FullName,
                     Id = x.Id,
                     IsAdministrator = x.IsAdministrator,
-                    Phone = x.Phone
+                    Phone = x.Phone,
+                    Access = x.Access
                 }));
         }
 
@@ -52,14 +53,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     new List<string> { "Usuário não encontrado." });
             }
 
-            return new APIMessage(HttpStatusCode.OK, new GetEmployeesResponse
+            return new APIMessage(HttpStatusCode.OK, new GetEmployeeByIdResponse
             {
                 Address = employee.Address,
                 Email = employee.Email,
                 FullName = employee.FullName,
-                Id = employee.Id,
                 IsAdministrator = employee.IsAdministrator,
-                Phone = employee.Phone
+                Phone = employee.Phone,
+                Access = employee.Access
             });
         }
 
@@ -80,9 +81,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 CreationUser = userName,
                 Email = request.Email,
                 FullName = request.FullName,
-                IsAdministrator = request.IsAdministrator,
-                Password = request.GeneratePassword ? Security.EncryptString(PasswordGenerator.GerarSenha(8)) :
-                Security.EncryptString(request.Password),
+                Password = Security.EncryptString(request.Password),
                 Phone = request.Phone,
             };
 
@@ -93,22 +92,23 @@ namespace GerenciamentoComercio_Domain.v1.Services
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Usuário cadastrado com sucesso." });
         }
 
-        public async Task<APIMessage> UpdateEmployeeAsync(UpdateEmployeeRequest request, int id)
+        public APIMessage UpdateEmployee(UpdateEmployeeRequest request, int id, int userCode)
         {
-            Employee employee = await _employeeRepository.GetById(id);
+            var validation = ValidadeUpdateEmployee(request, id, userCode);
 
-            if (employee == null)
+            if (validation.StatusCode != HttpStatusCode.OK)
             {
-                return new APIMessage(HttpStatusCode.NotFound,
-                    new List<string> { "Usuário não encontrado." });
+                return new APIMessage(validation.StatusCode, validation.Content);
             }
+
+            Employee employee = (Employee)validation.ContentObj;
 
             employee.Access = request.Access ?? employee.Access;
             employee.Address = request.Address ?? employee.Address;
             employee.Email = request.Email ?? employee.Email;
             employee.FullName = request.FullName ?? employee.FullName;
-            employee.IsAdministrator = request.IsAdministrator ?? employee.IsAdministrator;
             employee.Phone = request.Phone ?? employee.Phone;
+            employee.Password = Security.EncryptString(request.Password) ?? employee.Password;
 
             _employeeRepository.Update(employee);
 
@@ -136,28 +136,49 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         private APIMessage ValidadeAddNewEmployee(AddNewEmployeeRequest request)
         {
-            if (!PasswordGenerator.ValidatePassword(request.Password, 8, 1, 0, 1, 1, 1) &&
-                !string.IsNullOrEmpty(request.Password))
+            if (!PasswordGenerator.ValidatePassword(request.Password, 8, 1, 0, 1, 1, 1))
                 return new APIMessage(HttpStatusCode
                     .BadRequest, new List<string> {"A senha deve conter 1 letra maiúscula, 1 letra minúscula," +
                     " 1 caractere especial, 1 número e no mínimo 8 caracteres." });
 
-            if (request.GeneratePassword && !string.IsNullOrEmpty(request.Password) ||
-                !request.GeneratePassword && string.IsNullOrEmpty(request.Password))
-            {
-                return new APIMessage(HttpStatusCode
-                    .BadRequest, new List<string> { "Favor inserir uma senha ou gerar uma senha automática." });
-            }
+            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
 
-            bool checkUserEmail = _employeeRepository.CheckIfExistUserWithSameEmail(request.Email);
-
-            if (checkUserEmail)
+            if (checkIfExistUserEmail != null)
             {
                 return new APIMessage(HttpStatusCode
                     .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });
             }
 
             return new APIMessage(HttpStatusCode.OK, "");
+        }
+
+        private APIMessage ValidadeUpdateEmployee(UpdateEmployeeRequest request, int id, int userCode)
+        {
+            Task<Employee> employee = _employeeRepository.GetById(id);
+
+            Task<Employee> loggedUser = _employeeRepository.GetById(userCode);
+
+            if (employee == null)
+            {
+                return new APIMessage(HttpStatusCode.NotFound,
+                    new List<string> { "Usuário não encontrado." });
+            }
+
+            Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
+
+            if (checkIfExistUserEmail != null)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Já existe um usuário cadastrado com este e-mail." });
+            }
+
+            if (!string.IsNullOrEmpty(request.Password) && !loggedUser.Result.IsAdministrator.Value)
+            {
+                return new APIMessage(HttpStatusCode
+                    .BadRequest, new List<string> { "Usuario não tem permissão para alteração de senha." });
+            }
+
+            return new APIMessage(HttpStatusCode.OK, employee);
         }
     }
 }
