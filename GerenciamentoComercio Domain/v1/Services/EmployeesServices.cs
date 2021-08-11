@@ -81,9 +81,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 CreationUser = userName,
                 Email = request.Email,
                 FullName = request.FullName,
-                IsAdministrator = request.IsAdministrator,
-                Password = request.GeneratePassword ? Security.EncryptString(PasswordGenerator.GerarSenha(8)) :
-                Security.EncryptString(request.Password),
+                Password = Security.EncryptString(request.Password),
                 Phone = request.Phone,
             };
 
@@ -109,7 +107,6 @@ namespace GerenciamentoComercio_Domain.v1.Services
             employee.Address = request.Address ?? employee.Address;
             employee.Email = request.Email ?? employee.Email;
             employee.FullName = request.FullName ?? employee.FullName;
-            employee.IsAdministrator = request.IsAdministrator ?? employee.IsAdministrator;
             employee.Phone = request.Phone ?? employee.Phone;
             employee.Password = Security.EncryptString(request.Password) ?? employee.Password;
 
@@ -139,18 +136,10 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         private APIMessage ValidadeAddNewEmployee(AddNewEmployeeRequest request)
         {
-            if (!PasswordGenerator.ValidatePassword(request.Password, 8, 1, 0, 1, 1, 1) &&
-                !string.IsNullOrEmpty(request.Password))
+            if (!PasswordGenerator.ValidatePassword(request.Password, 8, 1, 0, 1, 1, 1))
                 return new APIMessage(HttpStatusCode
                     .BadRequest, new List<string> {"A senha deve conter 1 letra maiúscula, 1 letra minúscula," +
                     " 1 caractere especial, 1 número e no mínimo 8 caracteres." });
-
-            if (request.GeneratePassword && !string.IsNullOrEmpty(request.Password) ||
-                !request.GeneratePassword && string.IsNullOrEmpty(request.Password))
-            {
-                return new APIMessage(HttpStatusCode
-                    .BadRequest, new List<string> { "Favor inserir uma senha ou gerar uma senha automática." });
-            }
 
             Employee checkIfExistUserEmail = _employeeRepository.GetUserByEmail(request.Email);
 

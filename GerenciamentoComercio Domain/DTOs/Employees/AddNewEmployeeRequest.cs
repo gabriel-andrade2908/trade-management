@@ -13,13 +13,9 @@ namespace GerenciamentoComercio_Domain.DTOs.Employees
 
         [Required(ErrorMessage = "O campo Acesso é obrigatório.")]
         public string Access { get; set; }
+
+        [Required(ErrorMessage = "O campo Senha é obrigatório.")]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "O campo Gerar senha automática é obrigatório.")]
-        public bool GeneratePassword { get; set; }
-
-        [Required(ErrorMessage = "O campo É administrador é obrigatório.")]
-        public bool IsAdministrator { get; set; }
 
         [RegularExpression(@"^\(?[1-9]{2}\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$", ErrorMessage = "Formato do campo Telefone inválido")]
         public string Phone { get; set; }

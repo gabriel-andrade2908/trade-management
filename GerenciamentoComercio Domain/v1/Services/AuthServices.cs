@@ -87,18 +87,18 @@ namespace Incidentes.Business.v1.Services
             Employee user = await _employeeRepository.GetById(userId);
 
             if (user == null) return new APIMessage(HttpStatusCode
-                .NotFound, "Não foi encontrado nenhum usuário com esse token.");
+                .NotFound, new List<string> { "Não foi encontrado nenhum usuário com esse token." });
 
             if (!PasswordGenerator.ValidatePassword(newPassword, 6, 1, 0, 1, 1, 1))
                 return new APIMessage(HttpStatusCode
-                    .BadRequest, "A nova senha deve conter 1 letra maiúscula, 1 letra minúscula," +
-                    " 1 caractere especial, 1 número e no mínimo 6 caracteres.");
+                    .BadRequest, new List<string> { "A nova senha deve conter 1 letra maiúscula, 1 letra minúscula," +
+                    " 1 caractere especial, 1 número e no mínimo 6 caracteres." });
 
             user.Password = Security.EncryptString(newPassword);
 
             _unitOfWork.Commit();
 
-            return new APIMessage(HttpStatusCode.OK, "Senha alterada com sucesso.");
+            return new APIMessage(HttpStatusCode.OK, new List<string> { "Senha alterada com sucesso." });
         }
 
         private ClaimsIdentity GetClaimsUser(Employee user)

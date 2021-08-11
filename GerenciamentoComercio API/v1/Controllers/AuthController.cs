@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace Sistema_Incidentes.v1.Controllers
 
             _emailServices.SendEmailRecoverPassword((Employee)response.ContentObj);
 
-            return Ok("Email para recuperação de senha enviado com sucesso.");
+            return Ok(new List<string> { "Email para recuperação de senha enviado com sucesso." });
         }
 
         [HttpGet("read-recover-token")]
