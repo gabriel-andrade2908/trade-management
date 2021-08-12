@@ -1,7 +1,7 @@
 ﻿using System;
-using GerenciamentoComercio_Infra.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using GerenciamentoComercio_Infra.Models;
 
 #nullable disable
 
@@ -312,9 +312,7 @@ namespace GerenciamentoComercio_Infra.Context
             {
                 entity.ToTable("PRODUCT");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("ID");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
                 entity.Property(e => e.CreationDate)
                     .HasColumnType("datetime")
