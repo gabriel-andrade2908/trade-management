@@ -78,10 +78,10 @@ namespace GerenciamentoComercio_API.v1.Controllers
         }
 
         [HttpDelete("{id}")]
-        [SwaggerOperation("Deletes a Product")]
+        [SwaggerOperation("Deletes a product")]
         [SwaggerResponse(StatusCodes.Status200OK, "Product deleted successfully", typeof(string))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Product not found", typeof(string))]
-        public IActionResult DeleteProducteAsync(int id)
+        public IActionResult DeleteProductAsync(int id)
         {
             APIMessage response = _productsServices.DeleteProduct(id);
 

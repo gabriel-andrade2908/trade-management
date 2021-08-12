@@ -40,6 +40,7 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<IEmployeesServices, EmployeesServices>();
             services.AddScoped<IClientsServices, ClientsServices>();
             services.AddScoped<IProductsServices, ProductsServices>();
+            services.AddScoped<IProductCategoriesServices, ProductCategoriesServices>();
 
             return services;
         }
