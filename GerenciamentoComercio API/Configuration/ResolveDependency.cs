@@ -29,6 +29,8 @@ namespace Sistema_Incidentes.Configuration
             //Repositories
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
 
 
             // Services
@@ -37,6 +39,7 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<IAuthServices, AuthServices>();
             services.AddScoped<IEmployeesServices, EmployeesServices>();
             services.AddScoped<IClientsServices, ClientsServices>();
+            services.AddScoped<IProductsServices, ProductsServices>();
 
             return services;
         }
