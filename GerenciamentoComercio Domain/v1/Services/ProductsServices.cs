@@ -38,7 +38,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryId = x.IdProductCategory ?? 0,
                     Description = x.Description,
                     CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Description,
-                    Id = x.Id
+                    Id = x.Id,
+                    IsActive = x.IsActive ?? false
                 }));
         }
 
@@ -57,7 +58,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Name = product.Name,
                 CategoryId = product.IdProductCategory ?? 0,
                 CategoryName = product.IdProductCategoryNavigation == null ? null : product.IdProductCategoryNavigation.Description,
-                Description = product.Description
+                Description = product.Description,
+                IsActive = product.IsActive ?? false
             });
         }
 
@@ -122,7 +124,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public APIMessage DeleteProduct(int id)
         {
-            Product product =  _productRepository.GetById(id);
+            Product product = _productRepository.GetById(id);
 
             if (product == null)
             {
