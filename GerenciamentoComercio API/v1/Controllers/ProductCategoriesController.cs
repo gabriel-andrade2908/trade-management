@@ -72,8 +72,6 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [SwaggerResponse(StatusCodes.Status404NotFound, "Category not found", typeof(string))]
         public async Task<IActionResult> UpdateProductCategoryAsync(UpdateProductCategoryRequest request, int id)
         {
-            if (!ModelState.IsValid) return CustomReturn(ModelState);
-
             APIMessage response = await _productCategoriesServices.UpdateProductCategoryAsync(request, id);
 
             return StatusCode((int)response.StatusCode, response.Content);
