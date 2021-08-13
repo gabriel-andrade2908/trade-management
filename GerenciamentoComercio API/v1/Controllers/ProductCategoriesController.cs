@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 namespace GerenciamentoComercio_API.v1.Controllers
 {
     [Authorize]
-    [Route("v{version:apiVersion}/products-categories/")]
+    [Route("v{version:apiVersion}/product-categories/")]
     [ApiVersion("1.0")]
     public class ProductCategoriesController : MainController
     {
