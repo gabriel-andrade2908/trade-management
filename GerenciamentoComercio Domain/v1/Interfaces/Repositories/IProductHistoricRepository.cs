@@ -4,10 +4,8 @@ using System.Collections.Generic;
 
 namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductHistoricRepository : IRepository<ProductHistoric>
     {
-        new Product GetById(int id);
-        new IEnumerable<Product> GetMany();
-        List<Product> GetProductByCategory(int categoryId);
+        List<ProductHistoric> GetHistoricByProductId(int productId);
     }
 }
