@@ -16,15 +16,18 @@ namespace GerenciamentoComercio_Domain.v1.Services
     {
         private readonly IServiceRepository _serviceRepository;
         private readonly IServiceCategoryRepository _serviceCategoriesRepository;
+        private readonly IServiceHistoricRepository _serviceHistoricRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ServicesServices(IUnitOfWork unitOfWork,
             IServiceRepository serviceRepository,
-            IServiceCategoryRepository serviceCategoriesRepository)
+            IServiceCategoryRepository serviceCategoriesRepository,
+            IServiceHistoricRepository serviceHistoricRepository)
         {
             _unitOfWork = unitOfWork;
             _serviceRepository = serviceRepository;
             _serviceCategoriesRepository = serviceCategoriesRepository;
+            _serviceHistoricRepository = serviceHistoricRepository;
         }
 
         public APIMessage GetAllServices()
@@ -37,10 +40,11 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     Name = x.Name,
                     CategoryId = x.IdServiceCategory ?? 0,
                     Description = x.Description,
-                    CategoryName = x.IdServiceCategoryNavigation == null ? null : x.IdServiceCategoryNavigation.Description,
+                    CategoryName = x.IdServiceCategoryNavigation == null ? null : x.IdServiceCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Sla = x.Sla ?? 0
+                    Sla = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
+                    Price = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
                 }));
         }
 
@@ -59,10 +63,29 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Name = service.Name,
                 CategoryId = service.IdServiceCategory ?? 0,
                 Description = service.Description,
-                CategoryName = service.IdServiceCategoryNavigation == null ? null : service.IdServiceCategoryNavigation.Description,
+                CategoryName = service.IdServiceCategoryNavigation == null ? null : service.IdServiceCategoryNavigation.Title,
                 IsActive = service.IsActive ?? false,
-                Sla = service.Sla ?? 0
+                Sla = service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id).Sla ?? 0,
+                Price = service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id).Price ?? 0,
             });
+        }
+
+        public APIMessage GetServicesByCategory(int categoryId)
+        {
+            IEnumerable<Service> services = _serviceRepository.GetServiceByCategory(categoryId);
+
+            return new APIMessage(HttpStatusCode.OK, services
+                .Select(x => new GetAllServicesResponse
+                {
+                    Name = x.Name,
+                    CategoryId = x.IdServiceCategory ?? 0,
+                    Description = x.Description,
+                    CategoryName = x.IdServiceCategoryNavigation == null ? null : x.IdServiceCategoryNavigation.Title,
+                    Id = x.Id,
+                    IsActive = x.IsActive ?? false,
+                    Sla = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
+                    Price = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
+                }));
         }
 
         public async Task<APIMessage> AddNewServiceAsync(AddNewServiceRequest request, string userName)
@@ -83,18 +106,19 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Name = request.Name,
                 IdServiceCategory = request.CategoryId,
                 CreationDate = DateTime.Now,
-                CreationUser = userName,
-                Sla = request.Sla
+                CreationUser = userName
             };
 
             _serviceRepository.AddNew(newService);
+
+            AddServiceHistoric(userName, request.Sla, request.Price);
 
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Serviço cadastrado com sucesso." });
         }
 
-        public async Task<APIMessage> UpdateServiceAsync(UpdateServiceRequest request, int id)
+        public async Task<APIMessage> UpdateServiceAsync(UpdateServiceRequest request, int id, string userName)
         {
             ServiceCategory category = await _serviceCategoriesRepository
                 .GetById(request.CategoryId ?? 0);
@@ -120,6 +144,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             _serviceRepository.Update(service);
 
+            AddServiceHistoric(userName, request.Sla, request.Price);
+
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Serviço atualizado com sucesso." });
@@ -140,6 +166,19 @@ namespace GerenciamentoComercio_Domain.v1.Services
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Serviço excluído com sucesso." });
+        }
+
+        private void AddServiceHistoric(string userName, int? sla, decimal? price)
+        {
+            var newHistoric = new ServiceHistoric
+            {
+                CreationDate = DateTime.Now,
+                CreationUser = userName,
+                Price = price,
+                Sla = sla
+            };
+
+            _serviceHistoricRepository.AddNew(newHistoric);
         }
     }
 }

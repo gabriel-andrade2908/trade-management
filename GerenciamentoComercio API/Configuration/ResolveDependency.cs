@@ -34,6 +34,7 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IProductHistoricRepository, ProductHistoricRepository>();
+            services.AddScoped<IServiceHistoricRepository, ServiceHistoricRepository>();
 
             // Services
             services.AddScoped<IEmailSender, EmailSender>();

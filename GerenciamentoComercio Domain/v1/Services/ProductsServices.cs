@@ -15,16 +15,19 @@ namespace GerenciamentoComercio_Domain.v1.Services
     public class ProductsServices : IProductsServices
     {
         private readonly IProductRepository _productRepository;
+        private readonly IProductHistoricRepository _productHistoricRepository;
         private readonly IProductCategoryRepository _productCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ProductsServices(IProductRepository productRepository,
             IProductCategoryRepository productCategoryRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IProductHistoricRepository productHistoricRepository)
         {
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
+            _productHistoricRepository = productHistoricRepository;
         }
 
         public APIMessage GetAllProducts()
@@ -40,8 +43,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
-                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
+                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
                 }));
         }
 
@@ -62,8 +65,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 CategoryName = product.IdProductCategoryNavigation == null ? null : product.IdProductCategoryNavigation.Title,
                 Description = product.Description,
                 IsActive = product.IsActive ?? false,
-                Price = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Price ?? 0,
-                Quantity = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Quantity ?? 0
+                Price = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Price ?? 0,
+                Quantity = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Quantity ?? 0
             });
         }
 
@@ -88,8 +91,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
-                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
+                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
                 }));
         }
 
@@ -116,12 +119,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             _productRepository.AddNew(newProduct);
 
+            AddProductHistoric(userName, request.Quantity, request.Price);
+
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Produto cadastrado com sucesso." });
         }
 
-        public async Task<APIMessage> UpdateProductAsync(UpdateProductRequest request, int id)
+        public async Task<APIMessage> UpdateProductAsync(UpdateProductRequest request, int id, string userName)
         {
             ProductCategory category = await _productCategoryRepository
                 .GetById(request.CategoryId ?? 0);
@@ -147,6 +152,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             _productRepository.Update(product);
 
+            AddProductHistoric(userName, request.Quantity, request.Price);
+
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Produto atualizado com sucesso." });
@@ -167,6 +174,19 @@ namespace GerenciamentoComercio_Domain.v1.Services
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Produto excluído com sucesso." });
+        }
+
+        private void AddProductHistoric(string userName, int? quantity, decimal? price)
+        {
+            var newHistoric = new ProductHistoric
+            {
+                CreationDate = DateTime.Now,
+                CreationUser = userName,
+                Price = price,
+                Quantity = quantity,
+            };
+
+            _productHistoricRepository.AddNew(newHistoric);
         }
     }
 }

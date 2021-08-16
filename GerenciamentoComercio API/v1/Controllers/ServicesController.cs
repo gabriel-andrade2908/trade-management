@@ -52,6 +52,22 @@ namespace GerenciamentoComercio_API.v1.Controllers
             return StatusCode((int)response.StatusCode, response.ContentObj);
         }
 
+        [HttpGet("by-category/{categoryId}")]
+        [SwaggerOperation("Returns a service by category")]
+        [SwaggerResponse(StatusCodes.Status200OK, "", typeof(GetServiceByIdResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Category not found", typeof(string))]
+        public IActionResult GetServiceByCategory(int categoryId)
+        {
+            APIMessage response = _servicesServices.GetServicesByCategory(categoryId);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return StatusCode((int)response.StatusCode, response.Content);
+            }
+
+            return StatusCode((int)response.StatusCode, response.ContentObj);
+        }
+
         [HttpPost]
         [SwaggerOperation("Add a new service")]
         [SwaggerResponse(StatusCodes.Status200OK, "Service created successfully", typeof(string))]
@@ -70,7 +86,7 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [SwaggerResponse(StatusCodes.Status404NotFound, "Service not found", typeof(string))]
         public async Task<IActionResult> UpdateServiceAsync(UpdateServiceRequest request, int id)
         {
-            APIMessage response = await _servicesServices.UpdateServiceAsync(request, id);
+            APIMessage response = await _servicesServices.UpdateServiceAsync(request, id, UserName);
 
             return StatusCode((int)response.StatusCode, response.Content);
         }

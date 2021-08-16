@@ -86,7 +86,7 @@ namespace GerenciamentoComercio_API.v1.Controllers
         [SwaggerResponse(StatusCodes.Status404NotFound, "Product not found", typeof(string))]
         public async Task<IActionResult> UpdateProductAsync(UpdateProductRequest request, int id)
         {
-            APIMessage response = await _productsServices.UpdateProductAsync(request, id);
+            APIMessage response = await _productsServices.UpdateProductAsync(request, id, UserName);
 
             return StatusCode((int)response.StatusCode, response.Content);
         }

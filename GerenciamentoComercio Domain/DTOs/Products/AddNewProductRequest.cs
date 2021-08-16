@@ -10,5 +10,7 @@ namespace GerenciamentoComercio_Domain.DTOs.Products
         [Required(ErrorMessage = "O campo Descrição é obrigatório")]
         public string Description { get; set; }
         public int? CategoryId { get; set; }
+        public int? Quantity { get; set; }
+        public decimal? Price { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Services
         APIMessage GetAllProducts();
         APIMessage GetProductById(int id);
         Task<APIMessage> AddNewProductAsync(AddNewProductRequest request, string userName);
-        Task<APIMessage> UpdateProductAsync(UpdateProductRequest request, int id);
+        Task<APIMessage> UpdateProductAsync(UpdateProductRequest request, int id, string userName);
         APIMessage DeleteProduct(int id);
         APIMessage GetProductByCategory(int categoryId);
     }

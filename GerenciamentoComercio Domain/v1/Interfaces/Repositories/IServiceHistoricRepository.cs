@@ -3,8 +3,7 @@ using GerenciamentoComercio_Infra.Models;
 
 namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
 {
-    public interface IProductCategoryRepository : IRepository<ProductCategory>
+    public interface IServiceHistoricRepository : IRepository<ServiceHistoric>
     {
-        ProductCategory GetCategoryByTitle(string title);
     }
 }

@@ -5,5 +5,6 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
 {
     public interface IServiceCategoryRepository : IRepository<ServiceCategory>
     {
+        ServiceCategory GetCategoryByTitle(string title);
     }
 }
