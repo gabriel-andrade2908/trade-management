@@ -52,6 +52,22 @@ namespace GerenciamentoComercio_API.v1.Controllers
             return StatusCode((int)response.StatusCode, response.ContentObj);
         }
 
+        [HttpGet("by-category/{categoryId}")]
+        [SwaggerOperation("Returns a product by category")]
+        [SwaggerResponse(StatusCodes.Status200OK, "", typeof(GetProductByIdResponse))]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "Category not found", typeof(string))]
+        public IActionResult GetProductByCategory(int categoryId)
+        {
+            APIMessage response = _productsServices.GetProductByCategory(categoryId);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+            {
+                return StatusCode((int)response.StatusCode, response.Content);
+            }
+
+            return StatusCode((int)response.StatusCode, response.ContentObj);
+        }
+
         [HttpPost]
         [SwaggerOperation("Add a new product")]
         [SwaggerResponse(StatusCodes.Status200OK, "Product created successfully", typeof(string))]

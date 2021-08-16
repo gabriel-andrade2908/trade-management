@@ -25,5 +25,11 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
             return _context.Products.Include(x => x.IdProductCategoryNavigation)
                 .FirstOrDefault(x => x.Id == id);
         }
+
+        public List<Product> GetProductByCategory(int categoryId)
+        {
+            return _context.Products.Include(x => x.IdProductCategoryNavigation)
+                .Where(x => x.IdProductCategory == categoryId).ToList();
+        }
     }
 }

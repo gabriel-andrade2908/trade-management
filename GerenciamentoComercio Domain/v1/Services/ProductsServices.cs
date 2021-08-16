@@ -37,9 +37,11 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     Name = x.Name,
                     CategoryId = x.IdProductCategory ?? 0,
                     Description = x.Description,
-                    CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Description,
+                    CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
                     Id = x.Id,
-                    IsActive = x.IsActive ?? false
+                    IsActive = x.IsActive ?? false,
+                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
                 }));
         }
 
@@ -57,10 +59,38 @@ namespace GerenciamentoComercio_Domain.v1.Services
             {
                 Name = product.Name,
                 CategoryId = product.IdProductCategory ?? 0,
-                CategoryName = product.IdProductCategoryNavigation == null ? null : product.IdProductCategoryNavigation.Description,
+                CategoryName = product.IdProductCategoryNavigation == null ? null : product.IdProductCategoryNavigation.Title,
                 Description = product.Description,
-                IsActive = product.IsActive ?? false
+                IsActive = product.IsActive ?? false,
+                Price = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Price ?? 0,
+                Quantity = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Quantity ?? 0
             });
+        }
+
+        public APIMessage GetProductByCategory(int categoryId)
+        {
+            Task<ProductCategory> category = _productCategoryRepository.GetById(categoryId);
+
+            if (category == null)
+            {
+                return new APIMessage(HttpStatusCode.NotFound,
+                    new List<string> { "Categoria não encontrada." });
+            }
+
+            IEnumerable<Product> products = _productRepository.GetProductByCategory(categoryId);
+
+            return new APIMessage(HttpStatusCode.OK, products
+                .Select(x => new GetAllProductsResponse
+                {
+                    Name = x.Name,
+                    CategoryId = x.IdProductCategory ?? 0,
+                    Description = x.Description,
+                    CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
+                    Id = x.Id,
+                    IsActive = x.IsActive ?? false,
+                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
+                }));
         }
 
         public async Task<APIMessage> AddNewProductAsync(AddNewProductRequest request, string userName)

@@ -8,5 +8,6 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
     {
         new Product GetById(int id);
         new IEnumerable<Product> GetMany();
+        List<Product> GetProductByCategory(int categoryId);
     }
 }

@@ -11,5 +11,6 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Services
         Task<APIMessage> AddNewProductAsync(AddNewProductRequest request, string userName);
         Task<APIMessage> UpdateProductAsync(UpdateProductRequest request, int id);
         APIMessage DeleteProduct(int id);
+        APIMessage GetProductByCategory(int categoryId);
     }
 }
