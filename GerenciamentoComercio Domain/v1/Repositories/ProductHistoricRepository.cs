@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace GerenciamentoComercio_Domain.v1.Repositories
 {
-    public class ProductHistoricRepository : Repository<ServiceHistoric>, IProductHistoricRepository
+    public class ProductHistoricRepository : Repository<ProductHistoric>, IProductHistoricRepository
     {
         public ProductHistoricRepository(GerenciamentoComercioContext context) : base(context)
         {
         }
 
-        public List<ServiceHistoric> GetHistoricByProductId(int productId)
+        public List<ProductHistoric> GetHistoricByProductId(int productId)
         {
             return _context.ProductHistorics.Where(x => x.IdProduct == productId).ToList();
         }

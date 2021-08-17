@@ -27,7 +27,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public async Task<APIMessage> GetAllProductsHistoricAsync()
         {
-            IEnumerable<ServiceHistoric> historics = await _productHistoricRepository.GetMany();
+            IEnumerable<ProductHistoric> historics = await _productHistoricRepository.GetMany();
 
             return new APIMessage(HttpStatusCode.OK, historics
                 .Select(x => new GetAllProductsHistoricResponse
@@ -43,7 +43,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public async Task<APIMessage> GetProductHistoricByIdAsync(int id)
         {
-            ServiceHistoric historic = await _productHistoricRepository.GetById(id);
+            ProductHistoric historic = await _productHistoricRepository.GetById(id);
 
             if (historic == null)
             {
@@ -63,7 +63,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public APIMessage GetHistoricByProductAsync(int productId)
         {
-            List<ServiceHistoric> productHistoric = _productHistoricRepository
+            List<ProductHistoric> productHistoric = _productHistoricRepository
                 .GetHistoricByProductId(productId);
 
             return new APIMessage(HttpStatusCode.OK, productHistoric
@@ -79,7 +79,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public APIMessage AddNewProductHistoricAsync(AddNewProductHistoricRequest request, string userName)
         {
-            var newProductHistoric = new ServiceHistoric
+            var newProductHistoric = new ProductHistoric
             {
                 IdProduct = request.ProductId,
                 Price = request.ProductPrice,
@@ -97,7 +97,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public async Task<APIMessage> UpdateProductHistoricAsync(UpdateProductHistoricRequest request, int id)
         {
-            ServiceHistoric productHistoric = await _productHistoricRepository.GetById(id);
+            ProductHistoric productHistoric = await _productHistoricRepository.GetById(id);
 
             if (productHistoric == null)
             {
@@ -117,7 +117,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public async Task<APIMessage> DeleteProductHistoricAsync(int id)
         {
-            ServiceHistoric productHistoric = await _productHistoricRepository.GetById(id);
+            ProductHistoric productHistoric = await _productHistoricRepository.GetById(id);
 
             if (productHistoric == null)
             {
