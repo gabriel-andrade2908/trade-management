@@ -63,7 +63,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             if (category != null)
             {
-                return new APIMessage(HttpStatusCode.NotFound,
+                return new APIMessage(HttpStatusCode.BadRequest,
                     new List<string> { "Já existe uma categoria com o mesmo título." });
             }
 
@@ -97,7 +97,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             if (category != null && category.Id != id )
             {
-                return new APIMessage(HttpStatusCode.NotFound,
+                return new APIMessage(HttpStatusCode.BadRequest,
                     new List<string> { "Já existe uma categoria com o mesmo título." });
             }
 

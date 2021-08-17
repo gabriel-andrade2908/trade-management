@@ -2,6 +2,8 @@
 using GerenciamentoComercio_Domain.v1.Interfaces.Repositories;
 using GerenciamentoComercio_Infra.Context;
 using GerenciamentoComercio_Infra.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GerenciamentoComercio_Domain.v1.Repositories
 {
@@ -9,6 +11,11 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
     {
         public ServiceHistoricRepository(GerenciamentoComercioContext context) : base(context)
         {
+        }
+
+        public List<ServiceHistoric> GetHistoricByServiceId(int serviceId)
+        {
+            return _context.ServiceHistorics.Where(x => x.IdService == serviceId).ToList();
         }
     }
 }

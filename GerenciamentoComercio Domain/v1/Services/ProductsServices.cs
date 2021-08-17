@@ -178,7 +178,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         private void AddProductHistoric(string userName, int? quantity, decimal? price)
         {
-            var newHistoric = new ProductHistoric
+            var newHistoric = new ServiceHistoric
             {
                 CreationDate = DateTime.Now,
                 CreationUser = userName,
