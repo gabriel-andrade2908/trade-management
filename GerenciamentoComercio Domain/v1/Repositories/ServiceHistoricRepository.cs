@@ -7,15 +7,15 @@ using System.Linq;
 
 namespace GerenciamentoComercio_Domain.v1.Repositories
 {
-    public class ProductHistoricRepository : Repository<ServiceHistoric>, IProductHistoricRepository
+    public class ServiceHistoricRepository : Repository<ServiceHistoric>, IServiceHistoricRepository
     {
-        public ProductHistoricRepository(GerenciamentoComercioContext context) : base(context)
+        public ServiceHistoricRepository(GerenciamentoComercioContext context) : base(context)
         {
         }
 
-        public List<ServiceHistoric> GetHistoricByProductId(int productId)
+        public List<ServiceHistoric> GetHistoricByServiceId(int serviceId)
         {
-            return _context.ProductHistorics.Where(x => x.IdProduct == productId).ToList();
+            return _context.ServiceHistorics.Where(x => x.IdService == serviceId).ToList();
         }
     }
 }

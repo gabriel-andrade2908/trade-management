@@ -59,6 +59,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         public APIMessage AddNewProductCategoryAsync(AddNewProductCategoryRequest request, string userName)
         {
+            ProductCategory category = _productCategoryRepository.GetCategoryByTitle(request.Title);
+
+            if (category != null)
+            {
+                return new APIMessage(HttpStatusCode.BadRequest,
+                    new List<string> { "Já existe uma categoria com o mesmo título." });
+            }
+
             var newProductCategory = new ProductCategory
             {
                 Description = request.Description,
@@ -83,6 +91,14 @@ namespace GerenciamentoComercio_Domain.v1.Services
             {
                 return new APIMessage(HttpStatusCode.NotFound,
                     new List<string> { "Categoria não encontrada." });
+            }
+
+            ProductCategory category = _productCategoryRepository.GetCategoryByTitle(request.Title);
+
+            if (category != null && id != category.Products.FirstOrDefault(x => x.Id == id).Id)
+            {
+                return new APIMessage(HttpStatusCode.BadRequest,
+                    new List<string> { "Já existe uma categoria com o mesmo título." });
             }
 
             productCategory.Title = request.Title ?? productCategory.Title;

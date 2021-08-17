@@ -68,38 +68,38 @@ namespace GerenciamentoComercio_API.v1.Controllers
             return StatusCode((int)response.StatusCode, response.ContentObj);
         }
 
-        [HttpPost]
-        [SwaggerOperation("Add a new product historic")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Historic created successfully", typeof(string))]
-        public IActionResult AddNewProductHistoricAsync(AddNewProductHistoricRequest request)
-        {
-            if (!ModelState.IsValid) return CustomReturn(ModelState);
+        //[HttpPost]
+        //[SwaggerOperation("Add a new product historic")]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Historic created successfully", typeof(string))]
+        //public IActionResult AddNewProductHistoricAsync(AddNewProductHistoricRequest request)
+        //{
+        //    if (!ModelState.IsValid) return CustomReturn(ModelState);
 
-            APIMessage response = _productsHistoricServices.AddNewProductHistoricAsync(request, UserName);
+        //    APIMessage response = _productsHistoricServices.AddNewProductHistoricAsync(request, UserName);
 
-            return StatusCode((int)response.StatusCode, response.Content);
-        }
+        //    return StatusCode((int)response.StatusCode, response.Content);
+        //}
 
-        [HttpPut("{id}")]
-        [SwaggerOperation("Updates a product historic")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Historic updated successfully", typeof(string))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Product historic not found", typeof(string))]
-        public async Task<IActionResult> UpdateProductHistoricAsync(UpdateProductHistoricRequest request, int id)
-        {
-            APIMessage response = await _productsHistoricServices.UpdateProductHistoricAsync(request, id);
+        //[HttpPut("{id}")]
+        //[SwaggerOperation("Updates a product historic")]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Historic updated successfully", typeof(string))]
+        //[SwaggerResponse(StatusCodes.Status404NotFound, "Product historic not found", typeof(string))]
+        //public async Task<IActionResult> UpdateProductHistoricAsync(UpdateProductHistoricRequest request, int id)
+        //{
+        //    APIMessage response = await _productsHistoricServices.UpdateProductHistoricAsync(request, id);
 
-            return StatusCode((int)response.StatusCode, response.Content);
-        }
+        //    return StatusCode((int)response.StatusCode, response.Content);
+        //}
 
-        [HttpDelete("{id}")]
-        [SwaggerOperation("Deletes a product historic")]
-        [SwaggerResponse(StatusCodes.Status200OK, "Historic deleted successfully", typeof(string))]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "Product historic not found", typeof(string))]
-        public async Task<IActionResult> DeleteProductHistoricAsync(int id)
-        {
-            APIMessage response = await _productsHistoricServices.DeleteProductHistoricAsync(id);
+        //[HttpDelete("{id}")]
+        //[SwaggerOperation("Deletes a product historic")]
+        //[SwaggerResponse(StatusCodes.Status200OK, "Historic deleted successfully", typeof(string))]
+        //[SwaggerResponse(StatusCodes.Status404NotFound, "Product historic not found", typeof(string))]
+        //public async Task<IActionResult> DeleteProductHistoricAsync(int id)
+        //{
+        //    APIMessage response = await _productsHistoricServices.DeleteProductHistoricAsync(id);
 
-            return StatusCode((int)response.StatusCode, response.Content);
-        }
+        //    return StatusCode((int)response.StatusCode, response.Content);
+        //}
     }
 }
