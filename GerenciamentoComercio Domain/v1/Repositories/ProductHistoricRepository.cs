@@ -15,7 +15,9 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public List<ProductHistoric> GetHistoricByProductId(int productId)
         {
-            return _context.ProductHistorics.Where(x => x.IdProduct == productId).ToList();
+            return _context.ProductHistoric
+                .Where(x => x.IdProduct == productId)
+                .ToList();
         }
     }
 }

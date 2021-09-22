@@ -16,13 +16,16 @@ namespace GerenciamentoComercio_Domain.v1.Services
     public class ProductCategoriesServices : IProductCategoriesServices
     {
         private readonly IProductCategoryRepository _productCategoryRepository;
+        private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ProductCategoriesServices(IProductCategoryRepository productCategoryRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IProductRepository productRepository)
         {
             _productCategoryRepository = productCategoryRepository;
             _unitOfWork = unitOfWork;
+            _productRepository = productRepository;
         }
 
         public async Task<APIMessage> GetAllProductCategoriesAsync()
@@ -95,7 +98,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             ProductCategory category = _productCategoryRepository.GetCategoryByTitle(request.Title);
 
-            if (category != null && id != category.Products.FirstOrDefault(x => x.Id == id).Id)
+            if (category != null && id != category.Product.FirstOrDefault(x => x.Id == id).Id)
             {
                 return new APIMessage(HttpStatusCode.BadRequest,
                     new List<string> { "Já existe uma categoria com o mesmo título." });
@@ -122,11 +125,23 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     new List<string> { "Categoria não encontrado." });
             }
 
+            List<Product> products = _productRepository.GetProductByCategory(id);
+
+            foreach (var product in products)
+            {
+                UpdateProductCategory(product);
+            }
+
             _productCategoryRepository.Delete(productCategory);
 
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Categoria excluída com sucesso." });
+        }
+
+        private void UpdateProductCategory(Product product)
+        {
+            product.IdProductCategory = null;
         }
     }
 }

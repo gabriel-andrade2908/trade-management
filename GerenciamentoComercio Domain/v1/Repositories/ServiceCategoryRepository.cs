@@ -14,7 +14,7 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public ServiceCategory GetCategoryByTitle(string title)
         {
-            return _context.ServiceCategories.FirstOrDefault(x => x.Title == title);
+            return _context.ServiceCategory.FirstOrDefault(x => x.Title == title);
         }
     }
 }

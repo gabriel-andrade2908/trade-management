@@ -15,7 +15,9 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public List<ServiceHistoric> GetHistoricByServiceId(int serviceId)
         {
-            return _context.ServiceHistorics.Where(x => x.IdService == serviceId).ToList();
+            return _context.ServiceHistoric
+                .Where(x => x.IdService == serviceId)
+                .ToList();
         }
     }
 }

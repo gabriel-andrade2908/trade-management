@@ -9,7 +9,7 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public Access()
         {
-            EmployeeAccesses = new HashSet<EmployeeAccess>();
+            EmployeeAccess = new HashSet<EmployeeAccess>();
         }
 
         public int Id { get; set; }
@@ -18,6 +18,6 @@ namespace GerenciamentoComercio_Infra.Models
         public DateTime? CreationDate { get; set; }
         public string CreationUser { get; set; }
 
-        public virtual ICollection<EmployeeAccess> EmployeeAccesses { get; set; }
+        public virtual ICollection<EmployeeAccess> EmployeeAccess { get; set; }
     }
 }

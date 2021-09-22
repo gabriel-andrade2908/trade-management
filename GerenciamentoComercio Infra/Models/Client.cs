@@ -9,7 +9,7 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public Client()
         {
-            ClientTransactions = new HashSet<ClientTransaction>();
+            ClientTransaction = new HashSet<ClientTransaction>();
         }
 
         public int Id { get; set; }
@@ -20,7 +20,8 @@ namespace GerenciamentoComercio_Infra.Models
         public string Address { get; set; }
         public DateTime? CreationDate { get; set; }
         public string CreationUser { get; set; }
+        public bool? IsActive { get; set; }
 
-        public virtual ICollection<ClientTransaction> ClientTransactions { get; set; }
+        public virtual ICollection<ClientTransaction> ClientTransaction { get; set; }
     }
 }

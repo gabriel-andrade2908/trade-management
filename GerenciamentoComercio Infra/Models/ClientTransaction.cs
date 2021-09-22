@@ -9,8 +9,8 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public ClientTransaction()
         {
-            ClientTransactionProducts = new HashSet<ClientTransactionProduct>();
-            ClientTransactionServices = new HashSet<ClientTransactionService>();
+            ClientTransactionProduct = new HashSet<ClientTransactionProduct>();
+            ClientTransactionService = new HashSet<ClientTransactionService>();
         }
 
         public int Id { get; set; }
@@ -25,7 +25,7 @@ namespace GerenciamentoComercio_Infra.Models
 
         public virtual Client IdClientNavigation { get; set; }
         public virtual Employee IdEmployeeNavigation { get; set; }
-        public virtual ICollection<ClientTransactionProduct> ClientTransactionProducts { get; set; }
-        public virtual ICollection<ClientTransactionService> ClientTransactionServices { get; set; }
+        public virtual ICollection<ClientTransactionProduct> ClientTransactionProduct { get; set; }
+        public virtual ICollection<ClientTransactionService> ClientTransactionService { get; set; }
     }
 }

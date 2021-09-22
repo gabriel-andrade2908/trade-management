@@ -43,8 +43,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdServiceCategoryNavigation == null ? null : x.IdServiceCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Sla = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
-                    Price = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
+                    Sla = x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
+                    Price = x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
                 }));
         }
 
@@ -65,8 +65,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Description = service.Description,
                 CategoryName = service.IdServiceCategoryNavigation == null ? null : service.IdServiceCategoryNavigation.Title,
                 IsActive = service.IsActive ?? false,
-                Sla = service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id).Sla ?? 0,
-                Price = service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistorics.FirstOrDefault(p => p.IdService == service.Id).Price ?? 0,
+                Sla = service.ServiceHistoric.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistoric.FirstOrDefault(p => p.IdService == service.Id).Sla ?? 0,
+                Price = service.ServiceHistoric.FirstOrDefault(p => p.IdService == service.Id) == null ? 0 : service.ServiceHistoric.FirstOrDefault(p => p.IdService == service.Id).Price ?? 0,
             });
         }
 
@@ -83,8 +83,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdServiceCategoryNavigation == null ? null : x.IdServiceCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Sla = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
-                    Price = x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistorics.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
+                    Sla = x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id).Sla ?? 0,
+                    Price = x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id) == null ? 0 : x.ServiceHistoric.FirstOrDefault(p => p.IdService == x.Id).Price ?? 0,
                 }));
         }
 

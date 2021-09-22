@@ -16,13 +16,16 @@ namespace GerenciamentoComercio_Domain.v1.Services
     public class ServiceCategoriesServices : IServiceCategoriesServices
     {
         private readonly IServiceCategoryRepository _serviceCategoryRepository;
+        private readonly IServiceRepository _serviceRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ServiceCategoriesServices(IServiceCategoryRepository serviceCategoryRepository,
-            IUnitOfWork unitOfWork)
+            IUnitOfWork unitOfWork,
+            IServiceRepository serviceRepository)
         {
             _serviceCategoryRepository = serviceCategoryRepository;
             _unitOfWork = unitOfWork;
+            _serviceRepository = serviceRepository;
         }
 
         public async Task<APIMessage> GetAllServiceCategoriesAsync()
@@ -124,9 +127,21 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
             _serviceCategoryRepository.Delete(serviceCategory);
 
+            List<Service> services = _serviceRepository.GetServiceByCategory(id);
+
+            foreach (Service service in services)
+            {
+                UpdateServiceCategory(service);
+            }
+
             _unitOfWork.Commit();
 
             return new APIMessage(HttpStatusCode.OK, new List<string> { "Categoria excluída com sucesso." });
+        }
+
+        private void UpdateServiceCategory(Service service)
+        {
+            service.IdServiceCategory = null;
         }
     }
 }

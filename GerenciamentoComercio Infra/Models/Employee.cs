@@ -9,8 +9,8 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public Employee()
         {
-            ClientTransactions = new HashSet<ClientTransaction>();
-            EmployeeAccesses = new HashSet<EmployeeAccess>();
+            ClientTransaction = new HashSet<ClientTransaction>();
+            EmployeeAccess = new HashSet<EmployeeAccess>();
         }
 
         public int Id { get; set; }
@@ -23,8 +23,9 @@ namespace GerenciamentoComercio_Infra.Models
         public bool? IsAdministrator { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+        public bool? IsActive { get; set; }
 
-        public virtual ICollection<ClientTransaction> ClientTransactions { get; set; }
-        public virtual ICollection<EmployeeAccess> EmployeeAccesses { get; set; }
+        public virtual ICollection<ClientTransaction> ClientTransaction { get; set; }
+        public virtual ICollection<EmployeeAccess> EmployeeAccess { get; set; }
     }
 }

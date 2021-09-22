@@ -20,5 +20,6 @@ namespace GerenciamentoComercio_Domain.DTOs.Employees
         [RegularExpression(@"^\(?[1-9]{2}\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$", ErrorMessage = "Formato do campo Telefone inválido")]
         public string Phone { get; set; }
         public string Address { get; set; }
+        public bool? IsActive { get; set; }
     }
 }
