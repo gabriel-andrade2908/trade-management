@@ -16,14 +16,14 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public Employee CheckLogin(LoginRequest request)
         {
-            return _context.Employees
+            return _context.Employee
                 .Where(x => x.Password == Security.EncryptString(request.Password) && 
                 x.Access == request.Access).FirstOrDefault();
         }
 
         public Employee GetUserByEmail(string email)
         {
-            return _context.Employees.FirstOrDefault(x => x.Email == email);
+            return _context.Employee.FirstOrDefault(x => x.Email == email);
         }
     }
 }

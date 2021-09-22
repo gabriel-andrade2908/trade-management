@@ -14,7 +14,7 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public Client GetClientByEmail(string email)
         {
-            return _context.Clients.FirstOrDefault(x => x.Email == email);
+            return _context.Client.FirstOrDefault(x => x.Email == email);
         }
     }
 }

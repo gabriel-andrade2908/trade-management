@@ -9,7 +9,7 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public ServiceCategory()
         {
-            Services = new HashSet<Service>();
+            Service = new HashSet<Service>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace GerenciamentoComercio_Infra.Models
         public string CreationUser { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<Service> Services { get; set; }
+        public virtual ICollection<Service> Service { get; set; }
     }
 }

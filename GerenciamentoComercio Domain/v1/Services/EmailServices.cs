@@ -33,7 +33,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             sMensagem += "<b>" + title + "</b><br /><br />";
             sMensagem += $"Foi aberto uma solicitação para a recuperação de senha do usuário {user}";
             sMensagem += $"<h1 style=\"padding-left: 50px; font-family: 'Lato'; font-size: 12px; color: #414A54;\">Abaixo segue o link para você recuperar sua senha, caso não tenha sido você que abriu a solicitação, gentilza desconsiderar esse e-mail.:<br /></h1>" + Environment.NewLine;
-            sMensagem += $"<a href='http://api.latech-erp.com//update-password/{token}'>Link para recuperação de senha.</a>";
+            sMensagem += $"<a href='http://latech-erp.com/recover-password/{token}'>Link para recuperação de senha.</a>";
             sMensagem += "<td style=\"width: 33%\"></td>";
             sMensagem += "<td style=\"width: 33%\"></td>";
             sMensagem += "<td style=\"width: 33%\"></td>";

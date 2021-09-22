@@ -17,18 +17,18 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
 
         public new IEnumerable<Product> GetMany()
         {
-            return _context.Products.Include(x => x.IdProductCategoryNavigation);
+            return _context.Product.Include(x => x.IdProductCategoryNavigation);
         }
 
         public new Product GetById(int id)
         {
-            return _context.Products.Include(x => x.IdProductCategoryNavigation)
+            return _context.Product.Include(x => x.IdProductCategoryNavigation)
                 .FirstOrDefault(x => x.Id == id);
         }
 
         public List<Product> GetProductByCategory(int categoryId)
         {
-            return _context.Products.Include(x => x.IdProductCategoryNavigation)
+            return _context.Product.Include(x => x.IdProductCategoryNavigation)
                 .Where(x => x.IdProductCategory == categoryId).ToList();
         }
     }

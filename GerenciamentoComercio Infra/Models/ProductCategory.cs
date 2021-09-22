@@ -9,7 +9,7 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public ProductCategory()
         {
-            Products = new HashSet<Product>();
+            Product = new HashSet<Product>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace GerenciamentoComercio_Infra.Models
         public string CreationUser { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

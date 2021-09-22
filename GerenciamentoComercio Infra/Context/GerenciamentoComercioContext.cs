@@ -1,7 +1,5 @@
-﻿using System;
+﻿using GerenciamentoComercio_Infra.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-using GerenciamentoComercio_Infra.Models;
 
 #nullable disable
 
@@ -18,19 +16,19 @@ namespace GerenciamentoComercio_Infra.Context
         {
         }
 
-        public virtual DbSet<Access> Accesses { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
-        public virtual DbSet<ClientTransaction> ClientTransactions { get; set; }
-        public virtual DbSet<ClientTransactionProduct> ClientTransactionProducts { get; set; }
-        public virtual DbSet<ClientTransactionService> ClientTransactionServices { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<EmployeeAccess> EmployeeAccesses { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<ProductCategory> ProductCategories { get; set; }
-        public virtual DbSet<ProductHistoric> ProductHistorics { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
-        public virtual DbSet<ServiceCategory> ServiceCategories { get; set; }
-        public virtual DbSet<ServiceHistoric> ServiceHistorics { get; set; }
+        public virtual DbSet<Access> Access { get; set; }
+        public virtual DbSet<Client> Client { get; set; }
+        public virtual DbSet<ClientTransaction> ClientTransaction { get; set; }
+        public virtual DbSet<ClientTransactionProduct> ClientTransactionProduct { get; set; }
+        public virtual DbSet<ClientTransactionService> ClientTransactionService { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<EmployeeAccess> EmployeeAccess { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<ProductCategory> ProductCategory { get; set; }
+        public virtual DbSet<ProductHistoric> ProductHistoric { get; set; }
+        public virtual DbSet<Service> Service { get; set; }
+        public virtual DbSet<ServiceCategory> ServiceCategory { get; set; }
+        public virtual DbSet<ServiceHistoric> ServiceHistoric { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -107,6 +105,8 @@ namespace GerenciamentoComercio_Infra.Context
                     .IsUnicode(false)
                     .HasColumnName("FULL_NAME");
 
+                entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+
                 entity.Property(e => e.Phone)
                     .HasMaxLength(15)
                     .IsUnicode(false)
@@ -148,12 +148,12 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("TOTAL_PRICE");
 
                 entity.HasOne(d => d.IdClientNavigation)
-                    .WithMany(p => p.ClientTransactions)
+                    .WithMany(p => p.ClientTransaction)
                     .HasForeignKey(d => d.IdClient)
                     .HasConstraintName("FK__CLIENT_TR__ID_CL__36B12243");
 
                 entity.HasOne(d => d.IdEmployeeNavigation)
-                    .WithMany(p => p.ClientTransactions)
+                    .WithMany(p => p.ClientTransaction)
                     .HasForeignKey(d => d.IdEmployee)
                     .HasConstraintName("FK__CLIENT_TR__ID_EM__37A5467C");
             });
@@ -184,12 +184,12 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.Quantity).HasColumnName("QUANTITY");
 
                 entity.HasOne(d => d.IdClientTransactionNavigation)
-                    .WithMany(p => p.ClientTransactionProducts)
+                    .WithMany(p => p.ClientTransactionProduct)
                     .HasForeignKey(d => d.IdClientTransaction)
                     .HasConstraintName("FK__CLIENT_TR__ID_CL__440B1D61");
 
                 entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany(p => p.ClientTransactionProducts)
+                    .WithMany(p => p.ClientTransactionProduct)
                     .HasForeignKey(d => d.IdProduct)
                     .HasConstraintName("FK__CLIENT_TR__ID_PR__44FF419A");
             });
@@ -220,12 +220,12 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.Quantity).HasColumnName("QUANTITY");
 
                 entity.HasOne(d => d.IdClientTransactionNavigation)
-                    .WithMany(p => p.ClientTransactionServices)
+                    .WithMany(p => p.ClientTransactionService)
                     .HasForeignKey(d => d.IdClientTransaction)
                     .HasConstraintName("FK__CLIENT_TR__ID_CL__403A8C7D");
 
                 entity.HasOne(d => d.IdServiceNavigation)
-                    .WithMany(p => p.ClientTransactionServices)
+                    .WithMany(p => p.ClientTransactionService)
                     .HasForeignKey(d => d.IdService)
                     .HasConstraintName("FK__CLIENT_TR__ID_SE__412EB0B6");
             });
@@ -265,6 +265,8 @@ namespace GerenciamentoComercio_Infra.Context
                     .IsUnicode(false)
                     .HasColumnName("FULL_NAME");
 
+                entity.Property(e => e.IsActive).HasColumnName("IS_ACTIVE");
+
                 entity.Property(e => e.IsAdministrator).HasColumnName("IS_ADMINISTRATOR");
 
                 entity.Property(e => e.Password)
@@ -298,12 +300,12 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.IdEmployee).HasColumnName("ID_EMPLOYEE");
 
                 entity.HasOne(d => d.IdAccessNavigation)
-                    .WithMany(p => p.EmployeeAccesses)
+                    .WithMany(p => p.EmployeeAccess)
                     .HasForeignKey(d => d.IdAccess)
                     .HasConstraintName("FK__EMPLOYEE___ID_AC__3D5E1FD2");
 
                 entity.HasOne(d => d.IdEmployeeNavigation)
-                    .WithMany(p => p.EmployeeAccesses)
+                    .WithMany(p => p.EmployeeAccess)
                     .HasForeignKey(d => d.IdEmployee)
                     .HasConstraintName("FK__EMPLOYEE___ID_EM__3C69FB99");
             });
@@ -338,7 +340,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("NAME");
 
                 entity.HasOne(d => d.IdProductCategoryNavigation)
-                    .WithMany(p => p.Products)
+                    .WithMany(p => p.Product)
                     .HasForeignKey(d => d.IdProductCategory)
                     .HasConstraintName("FK__PRODUCT__ID_PROD__2E1BDC42");
             });
@@ -397,7 +399,7 @@ namespace GerenciamentoComercio_Infra.Context
                 entity.Property(e => e.Quantity).HasColumnName("QUANTITY");
 
                 entity.HasOne(d => d.IdProductNavigation)
-                    .WithMany(p => p.ProductHistorics)
+                    .WithMany(p => p.ProductHistoric)
                     .HasForeignKey(d => d.IdProduct)
                     .HasConstraintName("FK__PRODUCT_H__ID_PR__33D4B598");
             });
@@ -436,7 +438,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("SLA");
 
                 entity.HasOne(d => d.IdServiceCategoryNavigation)
-                    .WithMany(p => p.Services)
+                    .WithMany(p => p.Service)
                     .HasForeignKey(d => d.IdServiceCategory)
                     .HasConstraintName("FK__SERVICE__ID_SERV__2B3F6F97");
             });
@@ -497,7 +499,7 @@ namespace GerenciamentoComercio_Infra.Context
                     .HasColumnName("SLA");
 
                 entity.HasOne(d => d.IdServiceNavigation)
-                    .WithMany(p => p.ServiceHistorics)
+                    .WithMany(p => p.ServiceHistoric)
                     .HasForeignKey(d => d.IdService)
                     .HasConstraintName("FK__SERVICE_H__ID_SE__30F848ED");
             });

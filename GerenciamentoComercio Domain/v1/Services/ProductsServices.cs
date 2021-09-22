@@ -43,8 +43,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
-                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
+                    Price = x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
                 }));
         }
 
@@ -65,8 +65,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 CategoryName = product.IdProductCategoryNavigation == null ? null : product.IdProductCategoryNavigation.Title,
                 Description = product.Description,
                 IsActive = product.IsActive ?? false,
-                Price = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Price ?? 0,
-                Quantity = product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistorics.FirstOrDefault(p => p.IdProduct == product.Id).Quantity ?? 0
+                Price = product.ProductHistoric.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistoric.FirstOrDefault(p => p.IdProduct == product.Id).Price ?? 0,
+                Quantity = product.ProductHistoric.FirstOrDefault(p => p.IdProduct == product.Id) == null ? 0 : product.ProductHistoric.FirstOrDefault(p => p.IdProduct == product.Id).Quantity ?? 0
             });
         }
 
@@ -91,8 +91,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     CategoryName = x.IdProductCategoryNavigation == null ? null : x.IdProductCategoryNavigation.Title,
                     Id = x.Id,
                     IsActive = x.IsActive ?? false,
-                    Price = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
-                    Quantity = x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistorics.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
+                    Price = x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id).Price ?? 0,
+                    Quantity = x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id) == null ? 0 : x.ProductHistoric.FirstOrDefault(p => p.IdProduct == x.Id).Quantity ?? 0
                 }));
         }
 
@@ -178,7 +178,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
 
         private void AddProductHistoric(string userName, int? quantity, decimal? price)
         {
-            var newHistoric = new ServiceHistoric
+            var newHistoric = new ProductHistoric
             {
                 CreationDate = DateTime.Now,
                 CreationUser = userName,

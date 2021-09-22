@@ -9,8 +9,8 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public Service()
         {
-            ClientTransactionServices = new HashSet<ClientTransactionService>();
-            ServiceHistorics = new HashSet<ServiceHistoric>();
+            ClientTransactionService = new HashSet<ClientTransactionService>();
+            ServiceHistoric = new HashSet<ServiceHistoric>();
         }
 
         public int Id { get; set; }
@@ -23,7 +23,7 @@ namespace GerenciamentoComercio_Infra.Models
         public string CreationUser { get; set; }
 
         public virtual ServiceCategory IdServiceCategoryNavigation { get; set; }
-        public virtual ICollection<ClientTransactionService> ClientTransactionServices { get; set; }
-        public virtual ICollection<ServiceHistoric> ServiceHistorics { get; set; }
+        public virtual ICollection<ClientTransactionService> ClientTransactionService { get; set; }
+        public virtual ICollection<ServiceHistoric> ServiceHistoric { get; set; }
     }
 }

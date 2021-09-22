@@ -35,6 +35,9 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<IServiceRepository, ServiceRepository>();
             services.AddScoped<IProductHistoricRepository, ProductHistoricRepository>();
             services.AddScoped<IServiceHistoricRepository, ServiceHistoricRepository>();
+            services.AddScoped<IClientTransactionRepository, ClientTransactionRepository>();
+            services.AddScoped<IClientTransactionProductRepository, ClientTransactionProductRepository>();
+            services.AddScoped<IClientTransactionServiceRepository, ClientTransactionServiceRepository>();
 
             // Services
             services.AddScoped<IEmailSender, EmailSender>();
@@ -47,6 +50,10 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<IServicesServices, ServicesServices>();
             services.AddScoped<IServiceCategoriesServices, ServiceCategoriesServices>();
             services.AddScoped<IProductsHistoricServices, ProductsHistoricServices>();
+            services.AddScoped<IClientTransactionsServices, ClientTransactionsServices>();
+            services.AddScoped<ITransactionsCommonServices, TransactionsCommonServices>();
+            services.AddScoped<IProductTransactionServices, ProductTransactionServices>();
+            services.AddScoped<IServiceTransactionServices, ServiceTransactionServices>();
 
             return services;
         }

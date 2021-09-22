@@ -36,7 +36,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     FullName = x.FullName,
                     Id = x.Id,
                     Phone = x.Phone,
-                    Cpf = x.Cpf
+                    Cpf = x.Cpf,
+                    IsActive = x.IsActive.Value
                 }));
         }
 
@@ -56,7 +57,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Email = client.Email,
                 FullName = client.FullName,
                 Phone = client.Phone,
-                Cpf = client.Cpf
+                Cpf = client.Cpf,
+                IsActive = client.IsActive.Value
             });
         }
 
@@ -78,7 +80,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 Email = request.Email,
                 FullName = request.FullName,
                 Phone = request.Phone,
-                Cpf = request.Cpf
+                Cpf = request.Cpf,
+                IsActive = true
             };
 
             _clientRepository.AddNew(newClient);
@@ -111,6 +114,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             client.FullName = request.FullName ?? client.FullName;
             client.Phone = request.Phone ?? client.Phone;
             client.Cpf = request.Cpf ?? client.Cpf;
+            client.IsActive = request.IsActive ?? client.IsActive;
 
             _clientRepository.Update(client);
 

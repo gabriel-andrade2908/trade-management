@@ -9,8 +9,8 @@ namespace GerenciamentoComercio_Infra.Models
     {
         public Product()
         {
-            ClientTransactionProducts = new HashSet<ClientTransactionProduct>();
-            ProductHistorics = new HashSet<ProductHistoric>();
+            ClientTransactionProduct = new HashSet<ClientTransactionProduct>();
+            ProductHistoric = new HashSet<ProductHistoric>();
         }
 
         public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace GerenciamentoComercio_Infra.Models
         public string CreationUser { get; set; }
 
         public virtual ProductCategory IdProductCategoryNavigation { get; set; }
-        public virtual ICollection<ClientTransactionProduct> ClientTransactionProducts { get; set; }
-        public virtual ICollection<ProductHistoric> ProductHistorics { get; set; }
+        public virtual ICollection<ClientTransactionProduct> ClientTransactionProduct { get; set; }
+        public virtual ICollection<ProductHistoric> ProductHistoric { get; set; }
     }
 }

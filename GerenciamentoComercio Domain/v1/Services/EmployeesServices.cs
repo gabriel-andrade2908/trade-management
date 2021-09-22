@@ -39,7 +39,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     Id = x.Id,
                     IsAdministrator = x.IsAdministrator,
                     Phone = x.Phone,
-                    Access = x.Access
+                    Access = x.Access,
+                    IsActive = x.IsActive.Value
                 }));
         }
 
@@ -60,7 +61,8 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 FullName = employee.FullName,
                 IsAdministrator = employee.IsAdministrator,
                 Phone = employee.Phone,
-                Access = employee.Access
+                Access = employee.Access,
+                IsActive = employee.IsActive.Value
             });
         }
 
@@ -83,6 +85,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 FullName = request.FullName,
                 Password = Security.EncryptString(request.Password),
                 Phone = request.Phone,
+                IsActive = request.IsActive
             };
 
             _employeeRepository.AddNew(newEmployee);
@@ -109,6 +112,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
             employee.FullName = request.FullName ?? employee.FullName;
             employee.Phone = request.Phone ?? employee.Phone;
             employee.Password = Security.EncryptString(request.Password) ?? employee.Password;
+            employee.IsActive = request.IsActive ?? employee.IsActive;
 
             _employeeRepository.Update(employee);
 
