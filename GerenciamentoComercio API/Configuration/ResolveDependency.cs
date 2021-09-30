@@ -54,6 +54,7 @@ namespace Sistema_Incidentes.Configuration
             services.AddScoped<ITransactionsCommonServices, TransactionsCommonServices>();
             services.AddScoped<IProductTransactionServices, ProductTransactionServices>();
             services.AddScoped<IServiceTransactionServices, ServiceTransactionServices>();
+            services.AddScoped<IDashboardServices, DashboardServices>();
 
             return services;
         }
