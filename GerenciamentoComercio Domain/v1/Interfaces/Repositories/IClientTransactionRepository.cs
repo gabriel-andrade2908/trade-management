@@ -1,4 +1,5 @@
-﻿using GerenciamentoComercio_Domain.Utils.IRepository;
+﻿using GerenciamentoComercio_Domain.DTOs.Dashboard;
+using GerenciamentoComercio_Domain.Utils.IRepository;
 using GerenciamentoComercio_Infra.Models;
 using System.Collections.Generic;
 
@@ -10,5 +11,7 @@ namespace GerenciamentoComercio_Domain.v1.Interfaces.Repositories
         List<ClientTransaction> GetTransactionByEmployee(int employeeId);
         bool CheckIfServiceAlreadyExistInTransaction(int id);
         bool CheckIfProductAlreadyExistInTransaction(int id);
+        List<GetDashboardProductsTransactionsResponse> GetDashboardProductsTransactions(int numberOfDays);
+        List<GetDashboardServicesTransactionsResponse> GetDashboardServicesTransactions(int numberOfDays);
     }
 }

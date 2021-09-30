@@ -29,7 +29,8 @@ namespace GerenciamentoComercio_Domain.v1.Repositories
         public List<Service> GetServiceByCategory(int categoryId)
         {
             return _context.Service.Include(x => x.IdServiceCategoryNavigation)
-                .Where(x => x.IdServiceCategory == categoryId).ToList();
+                .Where(x => x.IdServiceCategory == categoryId)
+                .ToList();
         }
     }
 }
