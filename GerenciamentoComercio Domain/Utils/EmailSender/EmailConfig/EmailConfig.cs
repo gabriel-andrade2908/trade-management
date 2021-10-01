@@ -10,9 +10,9 @@ namespace GerenciamentoComercio_Domain.Utils.EmailSender.EmailConfig
         public static string SendEmail(string from, string to, string subject, string message, string smtpServer, string smtpPort, string validUser, string validPassword, string attachment, bool SSL)
         {
             WebProxy nProxy;
-            string sServidorProxy = "mail.escalapro.com.br";
-            string sUsuarioProxy = "noreply@escalapro.com.br";
-            string sSenhaProxy = "Mob#1234";
+            string sServidorProxy = "webmail.latech-erp.com";
+            string sUsuarioProxy = "noreply@latech-erp.com";
+            string sSenhaProxy = "Lealdrade123@";
 
             if (Strings.Trim(sServidorProxy) != string.Empty)
             {
@@ -64,7 +64,7 @@ namespace GerenciamentoComercio_Domain.Utils.EmailSender.EmailConfig
                     foreach (var attach in Strings.Split(attachment, ";"))
                         objectoEmail.Attachments.Add(new System.Net.Mail.Attachment(new MemoryStream(File.ReadAllBytes(attach)), new FileInfo(attach).Name));
                 }
-                using (System.Net.Mail.SmtpClient smtpSend = new System.Net.Mail.SmtpClient("smtplw.com.br", 587))
+                using (System.Net.Mail.SmtpClient smtpSend = new System.Net.Mail.SmtpClient("webmail.latech-erp.com", 587))
                 {
                     NetworkCredential nCredent = new NetworkCredential(validUser, validPassword);
 
