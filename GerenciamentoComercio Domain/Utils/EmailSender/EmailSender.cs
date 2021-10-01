@@ -7,9 +7,9 @@ namespace GerenciamentoComercio_Domain.Utils.EmailSender
 {
     public class EmailSender : IEmailSender
     {
-        private readonly string _emailSender = "no-reply@centraldefretes.com";
-        private readonly string _emailPassword = "senha#123";
-        private readonly string _provider = "smtp.office365.com";
+        private readonly string _emailSender = "noreply@latech-erp.com";
+        private readonly string _emailPassword = "Lealdrade123@";
+        private readonly string _provider = "webmail.latech-erp.com";
         private readonly string _smptPort = "587";
 
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -75,7 +75,7 @@ namespace GerenciamentoComercio_Domain.Utils.EmailSender
                                         string.Empty,
                                         true);
             }
-            catch
+            catch(Exception ex)
             {
             }
         }
