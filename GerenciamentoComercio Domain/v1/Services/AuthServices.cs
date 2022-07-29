@@ -43,7 +43,7 @@ namespace Incidentes.Business.v1.Services
             if (user == null)
             {
                 return new APIMessage(HttpStatusCode
-                    .Unauthorized, new List<string> { "E-mail ou senha inválidos." });
+                    .Unauthorized, new List<string> { "Usuário ou senha inválidos." });
             }
             ClaimsIdentity userClaims = GetClaimsUser(user);
 

@@ -35,13 +35,13 @@ namespace GerenciamentoComercio_Infra.Context
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=74.50.111.162;Database=GerenciamentoComercio;User ID=lealdrade;Password=Abc#1234");
+                optionsBuilder.UseSqlServer("Server=74.50.111.162;Database=GerenciamentoComercio;User ID=latecher;Password=Lealdrade123@");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasDefaultSchema("lealdrade")
+            modelBuilder.HasDefaultSchema("latecher")
                 .HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Access>(entity =>

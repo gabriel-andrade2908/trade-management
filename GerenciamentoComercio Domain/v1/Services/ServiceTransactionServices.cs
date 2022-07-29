@@ -81,6 +81,12 @@ namespace GerenciamentoComercio_Domain.v1.Services
             ClientTransactionService serviceTransaction = await _clientTransactionServiceRepository
                 .GetById(id);
 
+            if (serviceTransaction == null)
+            {
+                return new APIMessage(HttpStatusCode.NotFound,
+                new List<string> { "Transação não encontrada." });
+            }
+
             ClientTransaction clientTransaction = await _clientTransactionRepository
                 .GetById(serviceTransaction.IdClientTransaction.Value);
 

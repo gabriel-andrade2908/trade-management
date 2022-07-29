@@ -74,7 +74,7 @@ namespace Sistema_Incidentes.v1.Controllers
         {
             APIMessage tokenRecover = await _authServices.ReadTokenRecoverPassword(token);
 
-            return StatusCode((int)tokenRecover.StatusCode, tokenRecover.Content);
+            return StatusCode((int)tokenRecover.StatusCode, tokenRecover.ContentObj);
         }
 
         [HttpPut("recover-password")]

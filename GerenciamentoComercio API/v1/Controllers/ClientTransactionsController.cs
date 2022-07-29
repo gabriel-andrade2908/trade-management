@@ -78,7 +78,7 @@ namespace GerenciamentoComercio_API.v1.Controllers
             return StatusCode((int)response.StatusCode, response.ContentObj);
         }
 
-        [HttpGet("by-service/{employeeCode}")]
+        [HttpGet("by-employee/{employeeCode}")]
         [SwaggerOperation("Returns Transacations by employee")]
         [SwaggerResponse(StatusCodes.Status200OK, "", typeof(List<GetProductTransactionsResponse>))]
         [SwaggerResponse(StatusCodes.Status404NotFound, "Employee not found", typeof(string))]

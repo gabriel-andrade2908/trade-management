@@ -40,7 +40,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     IsAdministrator = x.IsAdministrator,
                     Phone = x.Phone,
                     Access = x.Access,
-                    IsActive = x.IsActive.Value
+                    IsActive = x.IsActive ?? false
                 }));
         }
 

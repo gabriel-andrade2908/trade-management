@@ -37,7 +37,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                     Id = x.Id,
                     Phone = x.Phone,
                     Cpf = x.Cpf,
-                    IsActive = x.IsActive.Value
+                    IsActive = x.IsActive ?? false
                 }));
         }
 
@@ -58,7 +58,7 @@ namespace GerenciamentoComercio_Domain.v1.Services
                 FullName = client.FullName,
                 Phone = client.Phone,
                 Cpf = client.Cpf,
-                IsActive = client.IsActive.Value
+                IsActive = client.IsActive ?? false
             });
         }
 

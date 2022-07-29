@@ -26,6 +26,10 @@ namespace TESTE
             services.AddWebApiConfiguration();
             services.AddContextConfiguration(Configuration);
             services.AddJwtConfiguration(Configuration);
+            services.AddServerSideBlazor().AddCircuitOptions(o =>
+            {
+                o.DetailedErrors = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
